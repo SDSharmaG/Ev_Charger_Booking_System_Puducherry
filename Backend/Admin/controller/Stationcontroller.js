@@ -1,4 +1,4 @@
-const Station = require('../Model/stationmodel');
+const Station = require("../Model/stationmodel");
 
 // Register a new station
 const StationRegister = async (req, res) => {
@@ -6,7 +6,9 @@ const StationRegister = async (req, res) => {
     const { name, location, chargers, status, address } = req.body;
 
     if (!name || !location || !address || !chargers) {
-      return res.status(400).json({ message: "Name, location, and chargers are required" });
+      return res
+        .status(400)
+        .json({ message: "Name, location, and chargers are required" });
     }
 
     const newStation = new Station({
@@ -15,7 +17,7 @@ const StationRegister = async (req, res) => {
       chargers,
       address,
       status: status || "Open",
-      image: req.file ? req.file.filename : null
+      image: req.file ? req.file.filename : null,
     });
 
     await newStation.save();
@@ -27,12 +29,14 @@ const StationRegister = async (req, res) => {
       chargers: newStation.chargers,
       address: newStation.address,
       status: newStation.status,
-      imageUrl: req.file ? `http://localhost:8080/uploads/${req.file.filename}` : null,
-      message: "Station Registered Successfully"
+      imageUrl: req.file
+        ? `http://localhost:8080/uploads/${req.file.filename}`
+        : null,
+      message: "Station Registered Successfully",
     });
   } catch (error) {
-    console.error('Error creating station:', error);
-    res.status(500).json({ message: 'Server error', error });
+    console.error("Error creating station:", error);
+    res.status(500).json({ message: "Server error", error });
   }
 };
 
@@ -41,28 +45,27 @@ const Stationdetails = async (req, res) => {
   try {
     const stations = await Station.find();
 
-    const formatted = stations.map(station => ({
+    const formatted = stations.map((station) => ({
       id: station._id,
       name: station.name,
       location: station.location,
       chargers: station.chargers,
       address: station.address,
       status: station.status,
-      imageUrl: station.image 
-        ? `http://localhost:8080/uploads/${station.image}` 
-        : null
+      imageUrl: station.image
+        ? `http://localhost:8080/uploads/${station.image}`
+        : null,
     }));
 
     res.status(200).json({
       message: "All station details fetched successfully!",
-      data: formatted
+      data: formatted,
     });
-
   } catch (error) {
     console.error("Error fetching station details:", error);
-    res.status(500).json({ 
-      message: "Error fetching station details", 
-      error: error.message 
+    res.status(500).json({
+      message: "Error fetching station details",
+      error: error.message,
     });
   }
 };
@@ -91,13 +94,16 @@ const getStationById = async (req, res) => {
         chargers: station.chargers,
         address: station.address,
         status: station.status,
-        imageUrl: station.image ? `http://localhost:8080/uploads/${station.image}` : null
-      }
+        imageUrl: station.image
+          ? `http://localhost:8080/uploads/${station.image}`
+          : null,
+      },
     });
-
   } catch (error) {
     console.error("Error fetching station:", error);
-    res.status(500).json({ message: "Error fetching station", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching station", error: error.message });
   }
 };
 
@@ -108,7 +114,10 @@ const updateStations = async (req, res) => {
 
     if (req.file) updateData.image = req.file.filename;
 
-    if (updateData.status && !["Open", "Close", "Maintenance"].includes(updateData.status)) {
+    if (
+      updateData.status &&
+      !["Open", "Close", "Maintenance"].includes(updateData.status)
+    ) {
       return res.status(400).json({ message: "Invalid status value" });
     }
 
@@ -132,8 +141,8 @@ const updateStations = async (req, res) => {
         status: updatedStation.status,
         imageUrl: updatedStation.image
           ? `http://localhost:8080/uploads/${updatedStation.image}`
-          : null
-      }
+          : null,
+      },
     });
   } catch (error) {
     console.error("Error updating station:", error);
@@ -150,7 +159,8 @@ const deleteStation = async (req, res) => {
 
     const deletedStation = await Station.findByIdAndDelete(id);
 
-    if (!deletedStation) return res.status(404).json({ message: "Station not found" });
+    if (!deletedStation)
+      return res.status(404).json({ message: "Station not found" });
 
     res.status(200).json({
       message: "Station deleted successfully",
@@ -158,18 +168,26 @@ const deleteStation = async (req, res) => {
     });
   } catch (error) {
     console.error("Error deleting station:", error);
-    res.status(500).json({ message: "Error deleting station", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error deleting station", error: error.message });
   }
 };
-const StationTotal = async(req,res) =>{
-  try{
-    const count = await Station.countDocuments();//to get total count of stations
-    res.json({sucess:true,totalStations:count});
-  }catch(err){
+const StationTotal = async (req, res) => {
+  try {
+    const count = await Station.countDocuments(); //to get total count of stations
+    res.json({ sucess: true, totalStations: count });
+  } catch (err) {
     console.log(err);
-    res.json({success:false,message :"Server Error"})
-    
+    res.json({ success: false, message: "Server Error" });
   }
-}
+};
 
-module.exports = { Stationdetails, StationRegister, updateStations, deleteStation, getStationById , StationTotal };
+module.exports = {
+  Stationdetails,
+  StationRegister,
+  updateStations,
+  deleteStation,
+  getStationById,
+  StationTotal,
+};

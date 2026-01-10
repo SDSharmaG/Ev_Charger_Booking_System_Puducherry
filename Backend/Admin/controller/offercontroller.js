@@ -1,14 +1,20 @@
-const Offer = require('../Model/offer'); // <- path must be correct
+const Offer = require("../Model/offer"); // <- path must be correct
 
 // Add new offer
 const addoffer = async (req, res) => {
   try {
     const newOffer = new Offer({
       ...req.body,
-      image: req.file ? req.file.filename : null
+      image: req.file ? req.file.filename : null,
     });
     await newOffer.save();
-    res.status(201).json({ success: true, message: "Offer added successfully", data: newOffer });
+    res
+      .status(201)
+      .json({
+        success: true,
+        message: "Offer added successfully",
+        data: newOffer,
+      });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Server Error" });
@@ -37,4 +43,3 @@ const deleteOffer = async (req, res) => {
 };
 
 module.exports = { addoffer, getalloffers, deleteOffer };
-

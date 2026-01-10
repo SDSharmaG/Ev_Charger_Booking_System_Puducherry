@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
-const config = require('../Config/config');
-const Admin = require('../Model/adminmodel');
+const jwt = require("jsonwebtoken");
+const config = require("../Config/config");
+const Admin = require("../Model/adminmodel");
 
 const AdminAuth = async (req, res, next) => {
   try {
@@ -31,7 +31,6 @@ const AdminAuth = async (req, res, next) => {
     // Attach admin to request
     req.admin = admin;
     next();
-
   } catch (err) {
     console.error("AdminAuth Error:", err);
     res.status(500).json({ error: err.message });

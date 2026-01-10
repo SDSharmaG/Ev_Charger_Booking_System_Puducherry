@@ -66,7 +66,7 @@ const createBooking = async (req, res) => {
         message: `New booking request from ${userName || "User"}`,
         bookingId: booking._id,
         role: "admin",
-        status: 0, // ✅ pending
+        status: 0, // pending
       });
     }
 
@@ -145,7 +145,7 @@ const updateBookingStatus = async (req, res) => {
     const { status } = req.body;
 
   
-       //❗ Validate request body
+       //Validate request body
     if (!status || !["paid", "rejected"].includes(status)) {
       return res.status(400).json({
         success: false,
@@ -163,7 +163,7 @@ const updateBookingStatus = async (req, res) => {
     }
 
  
-      // 🚫 Prevent invalid updates
+      // Prevent invalid updates
     if (booking.status === "paid") {
       return res.status(400).json({
         success: false,
@@ -179,13 +179,13 @@ const updateBookingStatus = async (req, res) => {
     }
 
 
-      // ✅ Update booking status
+      // Update booking status
 
     booking.status = status;
     await booking.save();
 
 
-       //🔔 Notify user
+       // Notify user
     await Notification.create({
       type: "booking_update",
       message:
@@ -197,7 +197,7 @@ const updateBookingStatus = async (req, res) => {
       role: "user",
     });
 
-      // ❌ STOP FLOW IF REJECTED
+      //  STOP FLOW IF REJECTED
 
     if (status === "rejected") {
       return res.json({
@@ -207,7 +207,7 @@ const updateBookingStatus = async (req, res) => {
       });
     }
 
-       //🧾 Prevent duplicate bills
+       //Prevent duplicate bills
     let bill = await Bill.findOne({ bookingId: booking._id });
     if (bill) {
       return res.json({
@@ -218,7 +218,7 @@ const updateBookingStatus = async (req, res) => {
       });
     }
 
-      // 💰 Calculate bill amount
+      // Calculate bill amount
 
     const start = new Date(booking.startTime);
     const end = new Date(booking.endTime);
@@ -232,7 +232,7 @@ const updateBookingStatus = async (req, res) => {
     const totalAmount = booking.totalCost || hours * ratePerHour;
 
 
-       //💾 Save bill
+       //Save bill
 
     bill = await Bill.create({
       bookingId: booking._id,
@@ -241,17 +241,15 @@ const updateBookingStatus = async (req, res) => {
       status: "paid",
     });
 
-    /* ===============================
-       📁 Ensure bills folder exists
-    =============================== */
+   // Ensure bills folder exists
+   
     const billsDir = path.join(__dirname, "..", "bills");
     if (!fs.existsSync(billsDir)) {
       fs.mkdirSync(billsDir, { recursive: true });
     }
 
-    /* ===============================
-       📄 Generate PDF Invoice
-    =============================== */
+// Generate PDF Invoice
+
     const pdfPath = path.join(billsDir, `bill_${bill._id}.pdf`);
     const doc = new PDFDocument({ size: "A4", margin: 50 });
 
@@ -264,7 +262,7 @@ const updateBookingStatus = async (req, res) => {
 
     doc.moveDown(0.5);
     doc.fontSize(10).fillColor("gray")
-      .text("EV Charge Station Pvt Ltd", { align: "center" })
+      .text("EV Charge Booking System Puducherry Pvt Ltd", { align: "center" })
       .text("support@evcharge.com | +91 9876543210", { align: "center" });
 
     doc.moveDown(2);
@@ -301,9 +299,7 @@ const updateBookingStatus = async (req, res) => {
 
     doc.end();
 
-    /* ===============================
-       ✅ FINAL RESPONSE
-    =============================== */
+// FINAL RESPONSE
     return res.json({
       success: true,
       message: "Booking approved, bill generated & PDF created",

@@ -1,13 +1,22 @@
-const Charger = require('../Model/chargermodel');
+const Charger = require("../Model/chargermodel");
 const Station = require("../Model/stationmodel");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 //  Add Charger
 const addCharger = async (req, res) => {
   try {
-    const { stationId, chargername, type, poweroutput, status, connectortype, rate } = req.body;
+    const {
+      stationId,
+      chargername,
+      type,
+      poweroutput,
+      status,
+      connectortype,
+      rate,
+    } = req.body;
 
-    if (!stationId) return res.status(400).json({ message: "Station ID is required" });
+    if (!stationId)
+      return res.status(400).json({ message: "Station ID is required" });
 
     // Verify station exists
     const station = await Station.findById(stationId);
@@ -30,21 +39,28 @@ const addCharger = async (req, res) => {
     });
   } catch (error) {
     console.error("Error adding charger:", error);
-    res.status(500).json({ message: "Failed to add charger", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to add charger", error: error.message });
   }
 };
 
 // ✅ Get All Chargers
 const getChargers = async (req, res) => {
   try {
-    const chargers = await Charger.find().populate("stationId", "name location");
+    const chargers = await Charger.find().populate(
+      "stationId",
+      "name location"
+    );
     res.status(200).json({
       message: "Chargers fetched successfully",
       data: chargers,
     });
   } catch (error) {
     console.error("Error fetching chargers:", error);
-    res.status(500).json({ message: "Failed to fetch chargers", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to fetch chargers", error: error.message });
   }
 };
 
@@ -63,7 +79,10 @@ const getChargersByStation = async (req, res) => {
     }
 
     // Find chargers for this station and populate station info
-    const chargers = await Charger.find({ stationId: id }).populate("stationId", "name location");
+    const chargers = await Charger.find({ stationId: id }).populate(
+      "stationId",
+      "name location"
+    );
 
     if (!chargers.length) {
       return res.status(200).json({
@@ -91,9 +110,12 @@ const updateCharger = async (req, res) => {
     const { id } = req.params;
     const updateData = req.body;
 
-    const updatedCharger = await Charger.findByIdAndUpdate(id, updateData, { new: true });
+    const updatedCharger = await Charger.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
 
-    if (!updatedCharger) return res.status(404).json({ message: "Charger not found" });
+    if (!updatedCharger)
+      return res.status(404).json({ message: "Charger not found" });
 
     res.status(200).json({
       message: "Charger updated successfully",
@@ -101,7 +123,9 @@ const updateCharger = async (req, res) => {
     });
   } catch (error) {
     console.error("Error updating charger:", error);
-    res.status(500).json({ message: "Failed to update charger", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to update charger", error: error.message });
   }
 };
 
@@ -116,7 +140,9 @@ const deleteCharger = async (req, res) => {
     res.status(200).json({ message: "Charger deleted successfully" });
   } catch (error) {
     console.error("Error deleting charger:", error);
-    res.status(500).json({ message: "Failed to delete charger", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to delete charger", error: error.message });
   }
 };
 

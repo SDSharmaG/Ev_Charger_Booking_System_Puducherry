@@ -5,7 +5,7 @@ const {
   createFeedback,
   getAllFeedback,
   getUserFeedback,
-  FeedbackTotal
+  FeedbackTotal,
 } = require("../controller/feedbackcontroller");
 
 // ADMIN → get all feedback
@@ -18,6 +18,6 @@ router.post("/create", createFeedback);
 router.get("/user/:userId", getUserFeedback);
 
 //Feedback total count
-router.get("/total",FeedbackTotal);
+router.get("/total", FeedbackTotal);
 
 module.exports = router;

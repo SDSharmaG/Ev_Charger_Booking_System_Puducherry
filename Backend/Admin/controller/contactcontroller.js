@@ -5,7 +5,9 @@ const createContact = async (req, res) => {
     const { name, email, message } = req.body;
 
     if (!name || !email || !message) {
-      return res.status(400).json({ success: false, message: "All fields required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "All fields required" });
     }
 
     const newMessage = new ContactMessage({
@@ -28,4 +30,4 @@ const createContact = async (req, res) => {
   }
 };
 
-module.exports={ createContact }
+module.exports = { createContact };

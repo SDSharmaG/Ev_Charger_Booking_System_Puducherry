@@ -105,19 +105,19 @@ const getUserFeedback = async (req, res) => {
     });
   }
 };
-const FeedbackTotal = async(req,res) =>{
-  try{
-  const count = await Feedback.countDocuments();
-  res.json({success:true,totalFeedback:count});
-  }catch(error) {
+const FeedbackTotal = async (req, res) => {
+  try {
+    const count = await Feedback.countDocuments();
+    res.json({ success: true, totalFeedback: count });
+  } catch (error) {
     console.log(error);
-    res.json({success:false,message:"Server Error",err})
+    res.json({ success: false, message: "Server Error", err });
   }
-}
+};
 
 module.exports = {
   createFeedback,
   getAllFeedback,
   getUserFeedback,
-  FeedbackTotal
+  FeedbackTotal,
 };

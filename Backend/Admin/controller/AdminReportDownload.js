@@ -31,9 +31,23 @@ const downloadReport = async (req, res) => {
 
     const drawTableHeader = (y) => {
       doc.font("Helvetica-Bold").fontSize(10);
-      const headers = ["User", "Station", "Charger", "Vehicle", "Start", "End", "Amount", "Status"];
-      headers.forEach((text, i) => doc.text(text, colX[i], y, { width: colWidth[i], align: "left" }));
-      doc.moveTo(colX[0], y + 15).lineTo(580, y + 15).stroke();
+      const headers = [
+        "User",
+        "Station",
+        "Charger",
+        "Vehicle",
+        "Start",
+        "End",
+        "Amount",
+        "Status",
+      ];
+      headers.forEach((text, i) =>
+        doc.text(text, colX[i], y, { width: colWidth[i], align: "left" })
+      );
+      doc
+        .moveTo(colX[0], y + 15)
+        .lineTo(580, y + 15)
+        .stroke();
     };
 
     let y = tableTop;
@@ -43,7 +57,10 @@ const downloadReport = async (req, res) => {
     bookings.forEach((b, idx) => {
       // Alternating row background
       if (idx % 2 === 0) {
-        doc.rect(30, y - 2, 550, rowHeight).fill("#f0f0f0").fillColor("black");
+        doc
+          .rect(30, y - 2, 550, rowHeight)
+          .fill("#f0f0f0")
+          .fillColor("black");
       }
 
       const rowData = [

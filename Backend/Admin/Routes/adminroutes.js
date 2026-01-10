@@ -1,11 +1,11 @@
-const express = require('express')
-const Admincontroller = require('../controller/Admincontroller')
-const router = express.Router()
+const express = require("express");
+const Admincontroller = require("../controller/Admincontroller");
+const router = express.Router();
 
-router.post('/Register',Admincontroller.Register)
+router.post("/Register", Admincontroller.Register);
 
-router.post('/Login',Admincontroller.Login)
+router.post("/Login", Admincontroller.Login);
 
-router.post('/Logout',Admincontroller.Logout)
+router.post("/Logout", Admincontroller.Logout);
 
-module.exports=router;
+module.exports = router;

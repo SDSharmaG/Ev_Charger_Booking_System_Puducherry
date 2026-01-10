@@ -1,17 +1,21 @@
-const jwt = require('jsonwebtoken')
-const config = require('../Config/config')
-const User = require('../Model/Usermodel')
+const jwt = require("jsonwebtoken");
+const config = require("../Config/config");
+const User = require("../Model/Usermodel");
 
 const UserAuth = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-      return res.status(401).json({ success:false, message: "Authorization header missing" });
+      return res
+        .status(401)
+        .json({ success: false, message: "Authorization header missing" });
     }
 
     if (!authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({ success:false, message: "Invalid token format" });
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid token format" });
     }
 
     const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
@@ -22,17 +26,18 @@ const UserAuth = async (req, res, next) => {
 
     const user = await User.findById(decoded.id);
     if (!user) {
-      return res.status(404).json({ success:false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
 
     req.user = user;
     next();
-
   } catch (err) {
     console.log("JWT ERROR:", err.message);
     return res.status(401).json({
       success: false,
-      message: "Token is not valid"
+      message: "Token is not valid",
     });
   }
 };
