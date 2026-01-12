@@ -1,33 +1,52 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
+
 
 const UpdateStation = ({ station, onClose, onUpdated }) => {
   const [form, setForm] = useState({
-    // id: station._id,
-    name: station.name,
-    location: station.location,
-    chargers: station.chargers,
-    address: station.address,
-    status: station.status || "Open", // default to Open
+    id: "",
+    name: "",
+    location: "",
+    chargers: 0,
+    address: "",
+    status: "Open",
     image: null,
   });
+
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // 🔄 Sync form when station changes
+  useEffect(() => {
+    if (station) {
+      setForm({
+        id: station._id || station.id, // ✅ support both safely
+        name: station.name || "",
+        location: station.location || "",
+        chargers: station.chargers || 0,
+        address: station.address || "",
+        status: station.status || "Open",
+        image: null,
+      });
+    }
+  }, [station]);
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
+
     if (name === "image") {
-      setForm({ ...form, image: files[0] });
+      setForm((prev) => ({ ...prev, image: files[0] }));
     } else {
-      setForm({ ...form, [name]: value });
+      setForm((prev) => ({ ...prev, [name]: value }));
     }
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-      // DEBUG: log station info
-  console.log("Edit station:", station);
-  console.log("Updating station with ID:", station.id);
-    if (!station.id) {
+
+    console.log("Edit station:", station);
+    console.log("Updating station with ID:", form.id);
+
+    if (!form.id) {
       setMessage("Station ID missing!");
       return;
     }
@@ -39,30 +58,37 @@ const UpdateStation = ({ station, onClose, onUpdated }) => {
     formData.append("name", form.name);
     formData.append("location", form.location);
     formData.append("chargers", Number(form.chargers));
-    formData.append("address" , form.address);
-    formData.append("status", form.status); // append status
+    formData.append("address", form.address);
+    formData.append("status", form.status);
     if (form.image) formData.append("image", form.image);
 
     try {
-      const res = await fetch(`http://localhost:8080/api/admin/stationupdate/${station.id}`, {
-        method: "PUT",
-        body: formData,
-      });
-      console.log("Updating station with ID:", station.id);
+      const res = await fetch(
+        `http://localhost:8080/api/admin/stationupdate/${form.id}`,
+        {
+          method: "PUT",
+          body: formData,
+        }
+      );
+
       const data = await res.json();
       console.log("Update response:", data);
-      localStorage.setItem("refresh_needed", "true");
+
+      if (!res.ok) {
+        setMessage(data.message || "Failed to update station");
+        return;
+      }
 
       alert("Station updated successfully");
-      if (res.ok) {
-        if (onUpdated)
-          onUpdated(station.id, { ...form, imageUrl: data.data?.imageUrl });
-        onClose();
-      } else {
-        setMessage(data.message || "Failed to update station");
-      }
+
+      onUpdated?.(form.id, {
+        ...form,
+        imageUrl: data.data?.imageUrl,
+      });
+
+      onClose();
     } catch (error) {
-      console.error(error);
+      console.error("Update error:", error);
       setMessage("Error connecting to backend");
     } finally {
       setLoading(false);
