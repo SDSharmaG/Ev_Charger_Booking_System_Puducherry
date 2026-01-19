@@ -15,6 +15,7 @@ const Home = () => {
 
   const images = [img1, img2, img3, img4, img5];
   const aboutRef = useRef(null);
+    const [open, setOpen] = useState(false);
   const contactRef = useRef(null);
   const [index, setIndex] = useState(0);
   const [offers, setOffers] = useState([]);
@@ -77,44 +78,65 @@ const Home = () => {
   return (
     <div className="home-page">
       {/* HEADER */}
-      <header className="header">
-        <div className="d-flex">
-        <div><img className="img-logo" src={logo} alt="" /></div>
-        <div className="h3"> EV Charger & Booking - Puducherry</div></div>
-        <div className="d-flex">
-          <div className="d-flex mt-2 px-4">
-            <h5
-              className="nav-bar"
-              onClick={() => {
-                window.scrollTo({
-                  top: 0,
-                  behavior: "smooth",
-                }),
-                  navigate("/");
-              }}
-            >
-              Home
-            </h5>
-            <h5
-              className="nav-bar"
-              onClick={() =>
-                aboutRef.current.scrollIntoView({ behavior: "smooth" })
-              }
-            >
-              About Us
-            </h5>
-
-            <h5
-              className="nav-bar"
-              onClick={() =>
-                contactRef.current.scrollIntoView({ behavior: "smooth" })
-              }
-            >
-              Contact Us
-            </h5>
+      <header className="header col-12">
+        <div className="d-flex align-items-center justify-content-between w-100 main-header-row">
+          <div className="d-flex align-items-center logo-container">
+            <img className="img-logo me-1" src={logo} alt="Logo" style={{ height: '50px', width: '65px' }} />
+            <h3 className="mb-0">EV Charger & Booking - Puducherry</h3>
           </div>
-          <button onClick={() => navigate("/signup")}>Sign Up</button>
-          <button onClick={() => navigate("/login")}>Login</button>
+
+          <button 
+            className="menu-toggle d-md-none" 
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle navigation"
+          >
+           <i className={open ? "bi bi-x-lg" : "bi bi-list"}></i>
+          </button>
+
+         
+
+          <div className={`nav-menu-container ${open ? 'active' : ''}`}>
+            <div className="d-flex align-items-center nav-links-wrapper">
+              <h5
+                className="nav-bar"
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                  navigate("/");
+                  setOpen(false);
+                }}
+              >
+                Home
+              </h5>
+              <h5
+                className="nav-bar"
+                onClick={() => {
+                  // Check if ref exists before scrolling to avoid errors
+                  if (aboutRef.current) {
+                    aboutRef.current.scrollIntoView({ behavior: "smooth" });
+                    setOpen(false);
+                  }
+                }}
+              >
+                About Us
+              </h5>
+
+              <h5
+                className="nav-bar"
+                onClick={() => {
+                   if (contactRef.current) {
+                    contactRef.current.scrollIntoView({ behavior: "smooth" });
+                    setOpen(false);
+                   }
+                }}
+              >
+                Contact Us
+              </h5>
+            </div>
+             <div className="auth-buttons">
+              <button onClick={() => { navigate("/signup"); setOpen(false); }}>Sign Up</button>
+              <button onClick={() => { navigate("/login"); setOpen(false); }}>Login</button>
+            </div>
+          </div>
         </div>
       </header>
 
