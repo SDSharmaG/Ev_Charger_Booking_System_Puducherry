@@ -17,7 +17,7 @@ const AdminOffers = () => {
 
   const fetchOffers = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/offers/all-offers");
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/offers/all-offers");
       const data = await res.json();
       setOffers(data.data || []);
     } catch (err) {
@@ -44,7 +44,7 @@ const AdminOffers = () => {
       const formData = new FormData();
       for (let key in form) formData.append(key, form[key]);
 
-      const res = await fetch("http://localhost:8080/api/offers/addoffers", {
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/offers/addoffers", {
         method: "POST",
         body: formData,
       });
@@ -71,7 +71,7 @@ const AdminOffers = () => {
   const handleDeleteOffer = async (id) => {
     if (!window.confirm("Are you sure you want to delete this offer?")) return;
     try {
-      const res = await fetch(`http://localhost:8080/api/offers/delete/${id}`, { method: "DELETE" });
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/offers/delete/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       await res.json();
       fetchOffers();
@@ -159,7 +159,7 @@ const AdminOffers = () => {
                   <td>{new Date(offer.validFrom).toLocaleDateString()}</td>
                   <td>{new Date(offer.validTill).toLocaleDateString()}</td>
                   <td>
-                    {offer.image ? <img src={`http://localhost:8080/uploads/offers/${offer.image}`} alt={offer.title} className="img-thumbnail" width="80"/> : "No Image"}
+                    {offer.image ? <img src={`${import.meta.env.VITE_API_BASE_URL}/uploads/offers/${offer.image}`} alt={offer.title} className="img-thumbnail" width="80"/> : "No Image"}
                   </td>
                   <td>
                     <button className="btn-delete" onClick={() => handleDeleteOffer(offer._id)}>Delete</button>

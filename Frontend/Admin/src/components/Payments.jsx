@@ -10,7 +10,7 @@ const Payments = () => {
   useEffect(() => {
     const fetchBills = async () => {
       try {
-        const res = await fetch("http://localhost:8080/api/bills/allbills");
+        const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/bills/allbills");
         const data = await res.json();
         console.log("Fetching from data: ", data);
         if (data.success) {
@@ -55,7 +55,7 @@ const Payments = () => {
                   className="btn btn-primary w-100"
                   onClick={() =>
                     window.open(
-                      `http://localhost:8080/api/bills/pdf/${bill._id}`,
+                      `${import.meta.env.VITE_API_BASE_URL}/api/bills/pdf/${bill._id}`,
                       "_blank"
                     )
                   }

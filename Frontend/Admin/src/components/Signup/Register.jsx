@@ -19,7 +19,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch('http://localhost:8080/api/admin/Register', {
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/Register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

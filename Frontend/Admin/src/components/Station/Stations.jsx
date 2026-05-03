@@ -13,7 +13,7 @@ const Stations = () => {
   // Fetch stations
   const fetchStations = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/admin/stationinfo");
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/admin/stationinfo");
       const data = await res.json();
       setStations(data.data || []);
     } catch (error) {

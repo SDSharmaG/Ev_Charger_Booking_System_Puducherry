@@ -26,7 +26,7 @@ const Layout = () => {
     const fetchNotifications = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/api/notifications/user/${user._id}`
+          `${import.meta.env.VITE_API_BASE_URL}/api/notifications/user/${user._id}`
         );
         const data = await res.json();
         if (data.success) setNotifications(data.data);
@@ -69,7 +69,7 @@ const Layout = () => {
 
       // Call logout API if token exists
       if (token) {
-        await fetch("http://localhost:8080/api/logout", {
+        await fetch(import.meta.env.VITE_API_BASE_URL + "/api/logout", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -207,7 +207,7 @@ const Layout = () => {
         // ✅ Mark as read
         if (note.status === 0) {
           await fetch(
-            `http://localhost:8080/api/notifications/${note._id}/read`,
+            `${import.meta.env.VITE_API_BASE_URL}/api/notifications/${note._id}/read`,
             { method: "PUT" }
           );
 
@@ -249,7 +249,7 @@ const Layout = () => {
                 >
                   {user && user?.profileImage ? (
                     <img
-                      src={`http://localhost:8080/uploads/Users/${user.profileImage}`}
+                      src={`${import.meta.env.VITE_API_BASE_URL}/uploads/Users/${user.profileImage}`}
                       alt="Profile"
                       className="rounded-circle"
                       style={{

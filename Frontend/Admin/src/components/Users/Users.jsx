@@ -10,7 +10,7 @@ const Users = () => {
   const FetchUsers = async () => {
     try {
       const token = localStorage.getItem("token")
-      const res = await fetch("http://localhost:8080/api/allusers",{
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/allusers",{
         headers:{
           Authorization:`Bearer ${token}`,
           "Content-Type" : "application/json",
@@ -43,7 +43,7 @@ const Users = () => {
   }
     try {
       
-      const res = await fetch(`http://localhost:8080/api/viewuser/${userId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/viewuser/${userId}`, {
         method : "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ const Users = () => {
 
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:8080/api/deleteuser/${userId}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/deleteuser/${userId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -190,7 +190,7 @@ const Users = () => {
     }}
   >
     <img
-      src={`http://localhost:8080/uploads/users/${profile.profileImage}`}
+      src={`${import.meta.env.VITE_API_BASE_URL}/uploads/users/${profile.profileImage}`}
       alt="profile"
       style={{
         width: "100%",

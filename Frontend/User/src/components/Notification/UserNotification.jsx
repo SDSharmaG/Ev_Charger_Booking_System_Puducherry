@@ -15,7 +15,7 @@ const UserNotifications = () => {
     if (!userId) return;
     try {
       const response = await fetch(
-        `http://localhost:8080/api/notifications/user/${userId}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/notifications/user/${userId}`
       );
       const data = await response.json();
       if (data.success) {
@@ -47,7 +47,7 @@ const UserNotifications = () => {
   const handleView = async (notificationId, route = "/layout/payments") => {
     try {
       // Mark notification as read
-      await fetch(`http://localhost:8080/api/notifications/${notificationId}/read`, {
+      await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/notifications/${notificationId}/read`, {
         method: "PUT",
       });
 

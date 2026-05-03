@@ -9,7 +9,7 @@ const Logout = () => {
     const handlelogout = async(e) =>{
         e.preventDefault();
         try{
-            const response = await fetch('http://localhost:8080/api/admin/Logout', {
+            const response = await fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/Logout', {
                 method : 'POST',
                 credentials: 'include',
                 // headers : {

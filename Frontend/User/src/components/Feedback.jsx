@@ -10,7 +10,7 @@ const FeedbackList = () => {
 
   const fetchFeedbacks = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/feedback/adminfeedback");
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/feedback/adminfeedback");
       const data = await res.json();
 
       if (data.success) {

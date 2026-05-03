@@ -36,7 +36,7 @@ const Home = () => {
   // Fetch offers from backend
   const fetchOffers = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/offers/all-offers");
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/offers/all-offers");
       const data = await res.json();
       setOffers(data.data || []);
     } catch (err) {
@@ -56,7 +56,7 @@ const Home = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:8080/api/contact", {
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -226,7 +226,7 @@ const Home = () => {
               <div className="offer-card" key={offer._id}>
                 {offer.image && (
                   <img
-                    src={`http://localhost:8080/uploads/offers/${offer.image}`}
+                    src={`${import.meta.env.VITE_API_BASE_URL}/uploads/offers/${offer.image}`}
                     alt={offer.title}
                   />
                 )}

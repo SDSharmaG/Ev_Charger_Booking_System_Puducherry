@@ -1,4 +1,4 @@
-const Station = require("../Model/stationmodel");
+ const Station = require("../Model/stationmodel");
 
 // Register a new station
 const StationRegister = async (req, res) => {

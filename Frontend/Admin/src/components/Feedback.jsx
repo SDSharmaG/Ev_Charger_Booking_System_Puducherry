@@ -8,7 +8,7 @@ const Feedback = () => {
     const fetchFeedbacks = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/feedback/adminfeedback"
+          import.meta.env.VITE_API_BASE_URL + "/api/feedback/adminfeedback"
         );
         const data = await response.json();
         if (data.success) {

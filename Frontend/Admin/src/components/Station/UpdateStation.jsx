@@ -64,7 +64,7 @@ const UpdateStation = ({ station, onClose, onUpdated }) => {
 
     try {
       const res = await fetch(
-        `http://localhost:8080/api/admin/stationupdate/${form.id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/stationupdate/${form.id}`,
         {
           method: "PUT",
           body: formData,

@@ -58,7 +58,7 @@ const ProfileEdit = () => {
 
     try {
         if(!token) return
-      const res = await fetch(`http://localhost:8080/api/updateuser/${userId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/updateuser/${userId}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`

@@ -17,21 +17,21 @@
 //   const [totalFeedback , setTotalFeedback] = useState(0);
 //   const [loading,setLoading] = useState(true);
 //   const FetchUser = async() =>{
-//     const  res = await fetch("http://localhost:8080/api/user/total")
+//     const  res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/user/total")
 //     const data = await res.json()
 //     console.log(data)
 //     setTotalUsers(data.totalUsers || 0)
 //     setLoading(false);
 //   }
 //   const FetchStations = async() =>{
-//     const res = await fetch("http://localhost:8080/api/admin/station/total");
+//     const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/admin/station/total");
 //     const data = await res.json();
 //     console.log(data)
 //     setTotalStations(data.totalStations || 0);
 //     setLoading(false);
 //   };
 //   const FetchBookings =async()=>{
-//     const res =  await fetch("http://localhost:8080/api/bookings/bookingall/total")
+//     const res =  await fetch(import.meta.env.VITE_API_BASE_URL + "/api/bookings/bookingall/total")
 //     const data = await res.json();
 //     console.log(data);
 //     setTotalBooking(data.totalBookings || 0);
@@ -39,14 +39,14 @@
 //   }
     
 //   const FetchRevenue = async () => {
-//     const res = await fetch("http://localhost:8080/api/bookings/revenue/total");
+//     const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/bookings/revenue/total");
 //     const data = await res.json();
 //     console.log(data);
 //     setTotalRevenue(data.totalRevenue || 0);
 //     setLoading(false);
 //   };
 //   const FetchFeedback = async() =>{
-//     const res = await fetch("http://localhost:8080/api/feedback/total")
+//     const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/feedback/total")
 //     const data = await res.json();
 //     setTotalFeedback(data.totalFeedback || 0);
 //     setLoading(false);
@@ -153,11 +153,11 @@ const Dashboard = () => {
     try {
       const [usersRes, stationsRes, bookingsRes, revenueRes, feedbackRes] =
         await Promise.all([
-          fetch("http://localhost:8080/api/user/total"),
-          fetch("http://localhost:8080/api/admin/station/total"),
-          fetch("http://localhost:8080/api/bookings/bookingall/total"),
-          fetch("http://localhost:8080/api/bookings/revenue/total"),
-          fetch("http://localhost:8080/api/feedback/total"),
+          fetch(import.meta.env.VITE_API_BASE_URL + "/api/user/total"),
+          fetch(import.meta.env.VITE_API_BASE_URL + "/api/admin/station/total"),
+          fetch(import.meta.env.VITE_API_BASE_URL + "/api/bookings/bookingall/total"),
+          fetch(import.meta.env.VITE_API_BASE_URL + "/api/bookings/revenue/total"),
+          fetch(import.meta.env.VITE_API_BASE_URL + "/api/feedback/total"),
         ]);
 
       const usersData = await usersRes.json();

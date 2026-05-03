@@ -6,7 +6,7 @@ const BookingList = () => {
 
   const fetchBookings = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/bookings/all");
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/bookings/all");
       const data = await res.json();
       setBookings(data.data);
       console.log(data)
@@ -26,7 +26,7 @@ const BookingList = () => {
 
   const updateStatus = async (id, status) => {
     try {
-      const res = await fetch(`http://localhost:8080/api/bookings/${id}/status`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/bookings/${id}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),

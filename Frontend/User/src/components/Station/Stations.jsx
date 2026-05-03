@@ -17,7 +17,7 @@ const Stations = () => {
     const fetchStations = async () => {
       try {
         setLoading(true);
-        const res = await fetch('http://localhost:8080/api/admin/stationinfo');
+        const res = await fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/stationinfo');
         
         if (!res.ok) {
           throw new Error('Failed to fetch stations');
@@ -52,7 +52,7 @@ const Stations = () => {
 
   // const fetchStationChargers = async (stationId) => {
   //   try {
-  //     const res = await fetch(`http://localhost:8080/api/admin/getchargerbyid/${stationId}`);
+  //     const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/getchargerbyid/${stationId}`);
   //     if (res.ok) {
   //       const data = await res.json();
   //       setStationChargers(data.chargers || data.data || []);

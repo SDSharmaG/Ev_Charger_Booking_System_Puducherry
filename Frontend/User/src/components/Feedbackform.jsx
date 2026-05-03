@@ -9,7 +9,7 @@ const FeedbackForm = ({ bookingId, userId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/api/feedback/create", {
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/feedback/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ bookingId, rating, comment }),

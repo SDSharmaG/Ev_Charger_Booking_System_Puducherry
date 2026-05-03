@@ -16,7 +16,7 @@ const Chargers = () => {
     const stationId = state.station._id || state.station.id;
     console.log("📌 Station ID:", stationId);
 
-    fetch(`http://localhost:8080/api/admin/getchargerbyid/${stationId}`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/getchargerbyid/${stationId}`)
       .then((res) => res.json())
       .then((data) => {
         console.log("⚡ Chargers API response:", data);

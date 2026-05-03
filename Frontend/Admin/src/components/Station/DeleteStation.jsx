@@ -10,7 +10,7 @@ const DeleteStation = ({ station, onClose, onDeleted  }) => {
     const stationId = station._id || station.id; // fallback
     setError(""); // clear previous error
     try {
-      const res = await fetch(`http://localhost:8080/api/admin/stationdelete/${stationId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/stationdelete/${stationId}`, {
         method: "DELETE",
       });
       const data = await res.json();

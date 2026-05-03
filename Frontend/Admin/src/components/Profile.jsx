@@ -22,7 +22,7 @@ const Profile = () => {
       setLoading(true);
       setError('');
 
-      const res = await fetch('http://localhost:8080/api/admin/profile', {
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/profile', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 

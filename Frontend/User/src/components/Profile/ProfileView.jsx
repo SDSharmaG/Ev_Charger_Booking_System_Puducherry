@@ -18,7 +18,7 @@ const Profile = () => {
       }
 
       try {
-        const res = await fetch(`http://localhost:8080/api/getuserbyid/${userId}`, {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/getuserbyid/${userId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -64,7 +64,7 @@ const Profile = () => {
           <div className="col-12 col-md-4 text-center mb-3 mb-md-0">
             {user?.profileImage ? (
               <img
-                src={`http://localhost:8080/uploads/Users/${user.profileImage}`}
+                src={`${import.meta.env.VITE_API_BASE_URL}/uploads/Users/${user.profileImage}`}
                 alt="Profile"
                 className="img-fluid rounded-circle"
                 style={{ width: "300px", height: "300px", objectFit: "cover" ,marginTop:"70px"}}

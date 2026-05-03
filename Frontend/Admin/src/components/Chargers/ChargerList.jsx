@@ -9,7 +9,7 @@ const ChargerList = ({ station }) => {
   // 🔹 Fetch chargers for this station
   const fetchChargers = async () => {
     try {
-      const res = await fetch(`http://localhost:8080/api/getchargerbyid/${station._id}`);
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/getchargerbyid/${station._id}`);
       const data = await res.json();
       setChargers(data.data || []);
     } catch (err) {
@@ -41,7 +41,7 @@ const ChargerList = ({ station }) => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this charger?")) {
       try {
-        await fetch(`http://localhost:8080/api/chargerdelete/${id}`, { method: "DELETE" });
+        await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/chargerdelete/${id}`, { method: "DELETE" });
         fetchChargers();
       } catch (err) {
         console.error("Error deleting charger:", err);
@@ -100,13 +100,13 @@ const ChargerList = ({ station }) => {
   const handleSave = async (formData) => {
     try {
       if (selectedCharger) {
-        await fetch(`http://localhost:8080/api/chargerupdate/${selectedCharger._id}`, {
+        await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/chargerupdate/${selectedCharger._id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         });
       } else {
-        await fetch("http://localhost:8080/api/chargeradd", {
+        await fetch(import.meta.env.VITE_API_BASE_URL + "/api/chargeradd", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...formData, stationId: station._id }),

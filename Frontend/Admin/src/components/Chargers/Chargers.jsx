@@ -11,7 +11,7 @@ const Chargers = () => {
 
   // Fetch all stations
   useEffect(() => {
-    fetch("http://localhost:8080/api/admin/stationinfo")
+    fetch(import.meta.env.VITE_API_BASE_URL + "/api/admin/stationinfo")
       .then((res) => res.json())
       .then((data) => setStations(data.data || []))
       .catch(console.error);
@@ -21,7 +21,7 @@ const Chargers = () => {
   const fetchChargers = async (stationId) => {
     if (!stationId) return;
     try {
-      const res = await fetch(`http://localhost:8080/api/admin/getchargerbyid/${stationId}`);
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/getchargerbyid/${stationId}`);
       const data = await res.json();
       setChargers(Array.isArray(data.data) ? data.data : []);
     } catch (err) {
@@ -59,7 +59,7 @@ const Chargers = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this charger?")) return;
     try {
-      await fetch(`http://localhost:8080/api/admin/chargerdelete/${id}`, { method: "DELETE" });
+      await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/chargerdelete/${id}`, { method: "DELETE" });
       fetchChargers(selectedStation.id);
     } catch (err) {
       console.error(err);
@@ -159,13 +159,13 @@ const Chargers = () => {
     if (!selectedStation || !selectedStation.id) return;
     try {
       if (selectedCharger) {
-        await fetch(`http://localhost:8080/api/admin/chargerupdate/${selectedCharger._id}`, {
+        await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/chargerupdate/${selectedCharger._id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         });
       } else {
-        await fetch("http://localhost:8080/api/admin/chargeradd", {
+        await fetch(import.meta.env.VITE_API_BASE_URL + "/api/admin/chargeradd", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...formData, stationId: selectedStation.id }),

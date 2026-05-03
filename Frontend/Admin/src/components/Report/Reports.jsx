@@ -24,10 +24,10 @@ const Reports = () => {
         const token = localStorage.getItem("token");
 
         const [stationsRes, bookingsRes, usersRes, feedbackRes] = await Promise.all([
-          fetch("http://localhost:8080/api/admin/stationinfo", { headers: { Authorization: `Bearer ${token}` } }),
-          fetch("http://localhost:8080/api/bookings/all", { headers: { Authorization: `Bearer ${token}` } }),
-          fetch("http://localhost:8080/api/allusers", { headers: { Authorization: `Bearer ${token}` } }),
-          fetch("http://localhost:8080/api/feedback/adminfeedback", { headers: { Authorization: `Bearer ${token}` } }),
+          fetch(import.meta.env.VITE_API_BASE_URL + "/api/admin/stationinfo", { headers: { Authorization: `Bearer ${token}` } }),
+          fetch(import.meta.env.VITE_API_BASE_URL + "/api/bookings/all", { headers: { Authorization: `Bearer ${token}` } }),
+          fetch(import.meta.env.VITE_API_BASE_URL + "/api/allusers", { headers: { Authorization: `Bearer ${token}` } }),
+          fetch(import.meta.env.VITE_API_BASE_URL + "/api/feedback/adminfeedback", { headers: { Authorization: `Bearer ${token}` } }),
         ]);
 
         const stationsData = await stationsRes.json();
@@ -51,7 +51,7 @@ const Reports = () => {
 
   const handleDownloadPDF = () => {
     // Open backend PDF endpoint in new tab
-    window.open("http://localhost:8080/api/admin/reportpdf", "_blank");
+    window.open(import.meta.env.VITE_API_BASE_URL + "/api/admin/reportpdf", "_blank");
   };
 
   if (loading) return <h2 className="text-center">Loading Report...</h2>;

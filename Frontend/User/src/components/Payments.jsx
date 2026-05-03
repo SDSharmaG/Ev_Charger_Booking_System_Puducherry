@@ -12,7 +12,7 @@ const Payments = () => {
     const fetchBills = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/api/bills/user/${user._id}`
+          `${import.meta.env.VITE_API_BASE_URL}/api/bills/user/${user._id}`
         );
         const data = await res.json();
 
@@ -87,7 +87,7 @@ const Payments = () => {
               className="btn btn-secondary mt-auto"
               onClick={() =>
                 window.open(
-                  `http://localhost:8080/api/bookings/${bill._id}/pdf`,
+                  `${import.meta.env.VITE_API_BASE_URL}/api/bookings/${bill._id}/pdf`,
                   "_blank"
                 )
               }

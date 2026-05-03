@@ -36,7 +36,7 @@ const AddStation = ({ onClose }) => {
     if (station.image) formData.append("image", station.image);
 
     try {
-      const res = await fetch("http://localhost:8080/api/admin/stationregister", {
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/admin/stationregister", {
         method: "POST",
         body: formData,
       });

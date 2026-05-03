@@ -18,7 +18,7 @@ const Layout = () => {
   =============================== */
   const fetchAdminNotifications = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/notifications/admin");
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/notifications/admin");
       const data = await res.json();
 
       if (data.success) {
@@ -36,7 +36,7 @@ const Layout = () => {
   =============================== */
   const markAsRead = async (id) => {
     try {
-      await fetch(`http://localhost:8080/api/notifications/${id}/read`, {
+      await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/notifications/${id}/read`, {
         method: "PUT",
       });
       fetchAdminNotifications();

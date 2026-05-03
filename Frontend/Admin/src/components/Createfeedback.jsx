@@ -18,7 +18,7 @@ const CreateFeedback = () => {
     const checkFeedback = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/api/feedback/booking/${bookingId}`
+          `${import.meta.env.VITE_API_BASE_URL}/api/feedback/booking/${bookingId}`
         );
         const data = await res.json();
         if (data.exists) {
@@ -44,7 +44,7 @@ const CreateFeedback = () => {
 
     try {
       const res = await fetch(
-        "http://localhost:8080/api/feedback/create",
+        import.meta.env.VITE_API_BASE_URL + "/api/feedback/create",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

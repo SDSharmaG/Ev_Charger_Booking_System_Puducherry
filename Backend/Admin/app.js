@@ -6,9 +6,13 @@ const cors = require("cors");
 
 app.use(express.json());
 // CORS configuration to allow cookies from frontend
+const allowedOrigins = process.env.FRONTEND_URLS 
+  ? process.env.FRONTEND_URLS.split(',') 
+  : ["http://localhost:5173", "http://localhost:5174"];
+
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"], // your frontend origin
+    origin: allowedOrigins,
     credentials: true,
   })
 );

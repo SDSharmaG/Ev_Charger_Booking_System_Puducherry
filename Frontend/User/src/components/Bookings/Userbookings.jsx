@@ -47,7 +47,7 @@ const CreateBooking = () => {
   const fetchBookedSlots = async (chargerId) => {
     try {
       const res = await fetch(
-        `http://localhost:8080/api/bookings/charger/${chargerId}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/bookings/charger/${chargerId}`
       );
       const data = await res.json();
       if (data.success) setBookedSlots(data.bookings || []);
@@ -133,7 +133,7 @@ const CreateBooking = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:8080/api/bookings/create", {
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL + "/api/bookings/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
