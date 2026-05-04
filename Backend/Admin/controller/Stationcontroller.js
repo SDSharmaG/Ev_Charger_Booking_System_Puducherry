@@ -30,7 +30,7 @@ const StationRegister = async (req, res) => {
       address: newStation.address,
       status: newStation.status,
       imageUrl: req.file
-        ? `http://localhost:8080/uploads/${req.file.filename}`
+        ? `${process.env.BACKEND_URL || 'http://localhost:8080'}/uploads/${req.file.filename}`
         : null,
       message: "Station Registered Successfully",
     });
@@ -53,7 +53,7 @@ const Stationdetails = async (req, res) => {
       address: station.address,
       status: station.status,
       imageUrl: station.image
-        ? `http://localhost:8080/uploads/${station.image}`
+        ? `${process.env.BACKEND_URL || 'http://localhost:8080'}/uploads/${station.image}`
         : null,
     }));
 
@@ -95,7 +95,7 @@ const getStationById = async (req, res) => {
         address: station.address,
         status: station.status,
         imageUrl: station.image
-          ? `http://localhost:8080/uploads/${station.image}`
+          ? `${process.env.BACKEND_URL || 'http://localhost:8080'}/uploads/${station.image}`
           : null,
       },
     });
@@ -140,7 +140,7 @@ const updateStations = async (req, res) => {
         address: updatedStation.address,
         status: updatedStation.status,
         imageUrl: updatedStation.image
-          ? `http://localhost:8080/uploads/${updatedStation.image}`
+          ? `${process.env.BACKEND_URL || 'http://localhost:8080'}/uploads/${updatedStation.image}`
           : null,
       },
     });
